@@ -9,5 +9,6 @@ class Blog extends Model
 {
     use HasFactory;
 
+    // untuk membuat mass asigment
     protected $guarded = ['id'];
 }
