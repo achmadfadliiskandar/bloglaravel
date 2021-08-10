@@ -91,7 +91,19 @@ class BlogController extends Controller
         $blog = Blog::find($id);
         $blog->judul = $request->input('judul');
         $blog->content = $request->input('content');
-        $blog->image = $request->input('image');
+        
+        if ($request->hasfile('images')) {
+            $destination = 'public/images/'. $blog->images;
+            if (File::exists($destination)) {
+            File::delete($destination);
+            }
+            $file = $request->file('images');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('public/image/', $filename);
+            $blog->image = $filename;
+        }
+
         $blog->update();
         return redirect('blog')->with('sukses','Blog Berhasil Di Edit');
     }
