@@ -93,14 +93,14 @@ class BlogController extends Controller
         $blog->content = $request->input('content');
         
         if ($request->hasfile('images')) {
-            $destination = 'public/images/'. $blog->images;
+            $destination = '/storage/images/'. $blog->images;
             if (File::exists($destination)) {
             File::delete($destination);
             }
             $file = $request->file('images');
             $extention = $file->getClientOriginalExtension();
             $filename = time().'.'.$extention;
-            $file->move('public/image/', $filename);
+            $file->move('/storage/images/', $filename);
             $blog->image = $filename;
         }
 
