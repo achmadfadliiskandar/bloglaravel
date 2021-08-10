@@ -5,11 +5,11 @@
 @section('judul','Form Tambah Blog')
 
 @section('content')
-<form method="POST" action="/blog/store">
+<form method="POST" action="/blog/store" enctype="multipart/form-data">
     @csrf
     <div class="mb-3">
-    <label for="gambar" class="form-label">Gambar</label>
-    <input type="file" class="form-control-file" id="gambar" name="gambar">
+    <label for="image" class="form-label">Gambar</label>
+    <input type="file" class="form-control-file" id="image" name="image">
     {{-- @error('gambar')
     <div class="alert alert-danger">Gambar Harus di Pilih</div>
     @enderror --}}

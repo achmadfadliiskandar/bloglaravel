@@ -37,11 +37,20 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'gambar' => 'required',
+            'image'=>'mimes:png,jpg,jpeg',
             'judul' => 'required',
             'content'=>'required',
         ]);
-        Blog::create($request->all());
+        $input = $request->all();
+        if ($request->hasFile('image')) {
+            $destination_path = 'public/images';
+            $image = $request->file('image');
+            $image_name = $image->getClientOriginalName();
+            $path = $request->file('image')->storeAs($destination_path,$image_name);
+
+            $input['image'] = $image_name;
+        }
+        Blog::create($input);
         return redirect('blog')->with('sukses','Blog Berhasil Di tambah');
     }
 
@@ -80,10 +89,10 @@ class BlogController extends Controller
     public function update(Request $request, $id)
     {
         $blog = Blog::find($id);
-        $blog->gambar = $request->gambar;
-        $blog->judul = $request->judul;
-        $blog->content = $request->content;
-        $blog->save();
+        $blog->judul = $request->input('judul');
+        $blog->content = $request->input('content');
+        $blog->image = $request->input('image');
+        $blog->update();
         return redirect('blog')->with('sukses','Blog Berhasil Di Edit');
     }
 

@@ -25,7 +25,7 @@
         @forelse($blogs as $key => $blog)
     <tr>
         <td>{{$key+1}}</td>
-        <td><img src="/gambarblog/{{$blog->gambar}}" alt="" width="100"></td>
+        <td><img src="{{asset('/storage/images/'.$blog->image)}}" alt="" width="100"></td>
         <td>{{$blog->judul}}</td>
         {{-- <td>{!! $blog->content !!}</td> --}}
         <td>

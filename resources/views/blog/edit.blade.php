@@ -5,13 +5,13 @@
 @section('judul','Form Tambah Blog')
 
 @section('content')
-<form method="POST" action="/blog/update/{{$blog->id}}">
+<form method="POST" action="/blog/update/{{$blog->id}}" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <div class="mb-3">
-    <label for="gambar" class="form-label">Gambar</label>
-    <input type="file" class="form-control-file" id="gambar" name="gambar">
-    <img src="/gambarblog/{{$blog->gambar}}" alt="" width="100">
+    <label for="image" class="form-label">Image</label>
+    <input type="file" class="form-control-file" id="image" name="image">
+    <img src="{{asset('/storage/images/'.$blog->image)}}" alt="" width="100">
     {{-- @error('gambar')
     <div class="alert alert-danger">Gambar Harus di Pilih</div>
     @enderror --}}
