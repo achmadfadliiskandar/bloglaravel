@@ -10,7 +10,7 @@
         {{ session('sukses') }}
     </div>
 @endif
-<a href="/blog/create" class="btn btn-primary my-3">Tambah Blog</a>
+<a href="{{url('/blog/create')}}" class="btn btn-primary my-3">Tambah Blog</a>
 <table class="table table-bordered">
     <thead>
     <tr>
@@ -25,13 +25,13 @@
         @forelse($blogs as $key => $blog)
     <tr>
         <td>{{$key+1}}</td>
-        <td><img src="{{asset('/storage/images/'.$blog->image)}}" alt="" width="100"></td>
+        <td><img src="{{asset('image/'.$blog->image)}}" alt="" width="100"></td>
         <td>{{$blog->judul}}</td>
         {{-- <td>{!! $blog->content !!}</td> --}}
         <td>
-            <a href="/blog/show/{{$blog->id}}" class="btn btn-info">Show</a>
-            <a href="/blog/edit/{{$blog->id}}" class="btn btn-success">Edit</a>
-            <form action="/blog/destroy/{{$blog->id}}" method="POST" style="display: inline-block;">
+            <a href="{{url('/blog/show',$blog->id)}}" class="btn btn-info">Show</a>
+            <a href="{{url('/blog/edit',$blog->id)}}" class="btn btn-success">Edit</a>
+            <form action="{{url('/blog/destroy',$blog->id)}}" method="POST" style="display: inline-block;" onsubmit="return confirm('are you sure')">
                 @csrf
                 @method('DELETE')
                 <button class="btn btn-danger">Delete</button>

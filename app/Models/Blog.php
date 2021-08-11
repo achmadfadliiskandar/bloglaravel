@@ -9,6 +9,9 @@ class Blog extends Model
 {
     use HasFactory;
 
-    // untuk membuat mass asigment
+    // untuk membuat mass asigment mass asignment nya bisa 2
+    // cara satu
     protected $guarded = ['id'];
+    // cara dua
+    //protected $fillable = ['image','judul','content'];
 }

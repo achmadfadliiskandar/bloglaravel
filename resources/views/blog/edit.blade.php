@@ -1,17 +1,17 @@
 @extends('partial.master')
 
-@section('title','Tambah Blog')
+@section('title','Edit Blog')
 
-@section('judul','Form Tambah Blog')
+@section('judul','Form Edit Blog')
 
 @section('content')
-<form method="POST" action="/blog/update/{{$blog->id}}" enctype="multipart/form-data">
+<form method="POST" action="{{url('/blog/update',$blog->id)}}" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <div class="mb-3">
     <label for="image" class="form-label">Image</label>
     <input type="file" class="form-control-file" id="image" name="image">
-    <img src="{{asset('/storage/images/'.$blog->image)}}" alt="" width="100">
+    <img src="{{asset('image/'.$blog->image)}}" alt="" width="100">
     {{-- @error('gambar')
     <div class="alert alert-danger">Gambar Harus di Pilih</div>
     @enderror --}}

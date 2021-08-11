@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Blog;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
@@ -14,7 +16,12 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::all();
+        // $blogs = Blog::all();
+        // return view('blog.index',compact('blogs'));
+        // cara di atas untuk memanggil semua isi dari table blog
+
+        // cara kedua
+        $blogs = Blog::latest()->paginate(10);
         return view('blog.index',compact('blogs'));
     }
 
@@ -41,16 +48,19 @@ class BlogController extends Controller
             'judul' => 'required',
             'content'=>'required',
         ]);
-        $input = $request->all();
-        if ($request->hasFile('image')) {
-            $destination_path = 'public/images';
-            $image = $request->file('image');
-            $image_name = $image->getClientOriginalName();
-            $path = $request->file('image')->storeAs($destination_path,$image_name);
-
-            $input['image'] = $image_name;
-        }
-        Blog::create($input);
+        // $input = $request->all();
+        // Blog::create($input);
+        $blog = new Blog;
+        if ($request->hasfile("image")) {
+            $file = $request->file("image");
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('image',$filename);
+            $blog->image = $filename;
+        };
+        $blog->judul = $request->input("judul");
+        $blog->content = $request->input("content");
+        $blog->save();
         return redirect('blog')->with('sukses','Blog Berhasil Di tambah');
     }
 
@@ -89,21 +99,19 @@ class BlogController extends Controller
     public function update(Request $request, $id)
     {
         $blog = Blog::find($id);
-        $blog->judul = $request->input('judul');
-        $blog->content = $request->input('content');
-        
-        if ($request->hasfile('images')) {
-            $destination = '/storage/images/'. $blog->images;
+        if ($request->hasfile('image')) {
+            $destination = 'image'. $blog->image;
             if (File::exists($destination)) {
             File::delete($destination);
             }
-            $file = $request->file('images');
+            $file = $request->file('image');
             $extention = $file->getClientOriginalExtension();
             $filename = time().'.'.$extention;
-            $file->move('/storage/images/', $filename);
+            $file->move('image', $filename);
             $blog->image = $filename;
         }
-
+        $blog->judul = $request->input('judul');
+        $blog->content = $request->input('content');
         $blog->update();
         return redirect('blog')->with('sukses','Blog Berhasil Di Edit');
     }
