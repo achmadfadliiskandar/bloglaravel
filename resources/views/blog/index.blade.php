@@ -10,6 +10,7 @@
         {{ session('sukses') }}
     </div>
 @endif
+{{-- untuk membuat tablenya --}}
 <a href="{{url('/blog/create')}}" class="btn btn-primary my-3">Tambah Blog</a>
 <table class="table table-bordered">
     <thead>
