@@ -5,7 +5,7 @@
 @section('judul','Form Tambah Blog')
 
 @section('content')
-<form method="POST" action="{{url('/blog/store')}}" enctype="multipart/form-data">
+<form method="POST" action="{{url('/blog')}}" enctype="multipart/form-data">
     @csrf
     <div class="mb-3">
     <label for="image" class="form-label">Gambar</label>
