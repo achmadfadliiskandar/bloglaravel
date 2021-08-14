@@ -27,3 +27,21 @@ Route::put('/blog/update/{id}', [BlogController::class, 'update']);
 Route::delete('/blog/destroy/{id}', [BlogController::class, 'destroy']);
 
 //Route::resource('blog', BlogController::class);
+
+Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route::get('admin', function () {
+//     return view('admin')->middleware('checkRole:admin');
+// });
+Route::get('admin', function () { return view('admin'); })->middleware('checkRole:admin');
+Route::get('penulis', function () { return view('penulis'); })->middleware('checkRole:admin,penulis');
+Route::get('pembaca', function () { return view('pembaca'); });
+
+// Route::get('penulis', function () {
+//     return view('penulis')->middleware('checkRole:admin,penulis');
+// });
+
+// Route::get('pembaca', function () {
+//     return view('pembaca');
+// });
